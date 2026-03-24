@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Поддержка</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('/images/ce97eee5a58b1a2544838846bfab69ea.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .support-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+        
+        /* Левая колонка с картинкой-приколом */
+        .joke-col {
+            flex: 0.8;
+            min-width: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .joke-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s;
+        }
+        
+        .joke-card:hover {
+            transform: scale(1.02);
+        }
+        
+        .joke-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .joke-caption {
+            color: white;
+            margin-top: 15px;
+            font-size: 1.1em;
+            font-style: italic;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        /* Форма */
+        .support-container {
+            flex: 2;
+            min-width: 350px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        /* Стеклянная плашка FAQ */
+        .faq-sidebar {
+            flex: 1;
+            min-width: 280px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            height: fit-content;
+        }
+        
+        .faq-sidebar h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .faq-item {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(5px);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .faq-question {
+            padding: 15px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+            font-size: 1.1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        
+        .faq-question:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .faq-question::after {
+            content: '▼';
+            font-size: 12px;
+            transition: transform 0.3s;
+        }
+        
+        .faq-item.open .faq-question::after {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            padding: 0 20px;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.5;
+            font-size: 0.95em;
+        }
+        
+        .faq-item.open .faq-answer {
+            max-height: 200px;
+            padding: 0 20px 15px 20px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        button {
+            background: #3498db;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #2980b9;
+        }
+        
+        .cancel {
+            background: #95a5a6;
+            text-decoration: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+        
+        .cancel:hover {
+            background: #7f8c8d;
+        }
+        
+        .history-link {
+            background: #27ae60;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            display: inline-block;
+            margin-left: 10px;
+            transition: background 0.3s;
+        }
+        
+        .history-link:hover {
+            background: #229954;
+        }
+        
+        .message {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        @media (max-width: 768px) {
+            .support-wrapper {
+                flex-direction: column;
+            }
+            .joke-col {
+                order: -2;
+            }
+            .faq-sidebar {
+                order: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="support-wrapper">
+        <!-- ЛЕВАЯ КОЛОНКА С КАРТИНКОЙ-ПРИКОЛОМ -->
+        <div class="joke-col">
+            <div class="joke-card">
+                <img src="/images/2a6a9cd269f4b2283fc5bfbd16f68739.jpg" alt="Прикол">
+                
+            </div>
+        </div>
+        
+        <!-- Форма обратной связи -->
+        <div class="support-container">
+            <h1> Служба поддержки</h1>
+            
+            <div th:if="${message != null}" class="message" th:classappend="${success ? 'success' : 'error'}">
+                <span th:text="${message}"></span>
+            </div>
+            
+            <form action="/support/send" method="post">
+                <div class="form-group">
+                    <label>Ваше имя:</label>
+                    <input type="text" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Email для ответа:</label>
+                    <input type="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Тема обращения:</label>
+                    <select name="subject" required>
+                        <option value="Вопрос"> Вопрос</option>
+                        <option value="Проблема"> Проблема с сайтом</option>
+                        <option value="Предложение"> Предложение</option>
+                        <option value="Другое"> Другое</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Сообщение:</label>
+                    <textarea name="message" placeholder="Опишите ваш вопрос или проблему..." required></textarea>
+                </div>
+                
+                <button type="submit">Отправить</button>
+                <a href="/" class="cancel">Отмена</a>
+                <a href="/support/history" class="history-link"> История</a>
+            </form>
+        </div>
+        
+        <!-- Стеклянная плашка с FAQ -->
+        <div class="faq-sidebar">
+            <h2> Часто задаваемые вопросы</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">Чета мне хочеца</div>
+                <div class="faq-answer">Заблокированно по требованию Роскомнадзора</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Можно ли попасть в рай без снилса?</div>
+                <div class="faq-answer">хз</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Господи срочно нужны денежные</div>
+                <div class="faq-answer">Понимаю</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Атмосфера не здоровая если честно</div>
+                <div class="faq-answer">Здравствуйте! Удалите себя</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Как посмотреть историю обращений?</div>
+                <div class="faq-answer">Глазами</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Как связаться с поддержкой?</div>
+                <div class="faq-answer">Я не хочу с вами говорить</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript для открытия/закрытия FAQ -->
+    <script>
+        document.querySelectorAll('.faq-item').forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                item.classList.toggle('open');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить факультет</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <h1> Добавить новый факультет</h1>
+    
+    <div class="form-container">
+        <form action="/add-faculty" method="post">
+            <div class="form-group">
+                <label>Название факультета:</label>
+                <input type="text" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Аудитория деканата:</label>
+                <input type="text" name="аудитория" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Номер корпуса:</label>
+                <input type="number" name="корпус" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Телефон:</label>
+                <input type="text" name="телефон" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Фамилия декана:</label>
+                <input type="text" name="декан" required>
+            </div>
+            
+            <button type="submit">Создать факультет</button>
+            <a href="/" class="cancel">Отмена</a>
+        </form>
+    </div>
+</body>
+</html>

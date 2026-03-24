@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>История обращений</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .history-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .message-card {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .empty {
+            text-align: center;
+            color: #7f8c8d;
+            padding: 40px;
+        }
+        .back-btn {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .back-btn:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="history-container">
+        <h1>📜 История обращений в поддержку</h1>
+        
+        <div th:if="${messages.isEmpty()}" class="empty">
+            <p>Пока нет обращений. Будьте первым!</p>
+        </div>
+        
+        <div th:each="msg : ${messages}" class="message-card">
+            <pre th:text="${msg}"></pre>
+        </div>
+        
+        <div style="text-align: center;">
+            <a href="/" class="back-btn">🏠 На главную</a>
+            <a href="/support" class="back-btn" style="background: #95a5a6; margin-left: 10px;">📧 Написать в поддержку</a>
+        </div>
+    </div>
+</body>
+</html>

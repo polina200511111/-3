@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить сотрудника</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-image: url('/images/996c056a0e9ebdcd1ceb8efc65c724b0.gif');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .cancel {
+            background: #95a5a6;
+            text-decoration: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .cancel:hover {
+            background: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <h1> Добавить сотрудника в состав факультета</h1>
+    
+    <div class="form-container">
+        <form action="/add-staff" method="post">
+            <div class="form-group">
+                <label>Выберите факультет:</label>
+                <select name="facultyIndex" required>
+                    <option value="">-- Выберите факультет --</option>
+                    <option th:each="faculty, iter : ${faculties}" 
+                            th:value="${iter.index + 1}" 
+                            th:text="${faculty.названиеФакультета}">
+                        Название факультета
+                    </option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>ФИО сотрудника:</label>
+                <input type="text" name="фио" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Должность:</label>
+                <input type="text" name="должность" required>
+            </div>
+            
+            <button type="submit">Добавить сотрудника</button>
+            <a href="/" class="cancel">Отмена</a>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Управление факультетами</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+
+        }
+        h1 {
+            color: #19125c;
+            text-align: center;
+             font-size: 50px;
+        }
+        .menu {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .menu a {
+            display: inline-block;
+            margin: 5px 10px;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .menu a:hover {
+            background: #2980b9;
+        }
+        .menu .sort {
+            background: #27ae60;
+        }
+        .menu .sort:hover {
+            background: #229954;
+        }
+        .faculty {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .faculty h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .faculty-info {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .section {
+            margin: 15px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        .section h3 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        .empty {
+            color: #7f8c8d;
+            font-style: italic;
+            padding: 10px;
+        }
+        .stats {
+            text-align: center;
+            color: #7f8c8d;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="margin-left: 100px;"> Управление факультетами</h1>
+    <!-- Логотип в левом верхнем углу -->
+<img src="/images/logo.png" 
+     alt="Логотип" 
+     style="position: fixed; 
+            top: 20px; 
+            left: 20px; 
+            height: 60px;
+            z-index: 1000;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+    
+    
+    <div class="menu">
+        <a href="/add-faculty"> Добавить факультет</a>
+        <a href="/add-department"> Добавить кафедру</a>
+        <a href="/add-teacher"> Добавить преподавателя</a>
+        <a href="/add-staff"> Добавить сотрудника</a>
+        <a href="/sort-by-name" class="sort"> Сортировать по названию</a>
+        <a href="/sort-by-corps" class="sort"> Сортировать по корпусу</a>
+        <a href="/save" class="sort"> Сохранить в файл</a>
+        <a href="/load" class="sort"> Загрузить из файла</a>
+    </div>
+    
+    <div th:if="${faculties.empty}">
+        <div class="faculty">
+            <p class="empty">Пока нет факультетов. Добавьте первый!</p>
+        </div>
+    </div>
+    
+    <div th:each="faculty : ${faculties}" class="faculty">
+        <h2 th:text="${faculty.названиеФакультета}">Название факультета</h2>
+        
+        <div class="faculty-info" th:text="${faculty.факультет}">
+            Информация о факультете
+        </div>
+        
+        <div class="section">
+            <h3> Сотрудники факультета</h3>
+            <div th:if="${faculty.состав.empty}" class="empty">
+                Нет сотрудников
+            </div>
+            <div th:each="сотр : ${faculty.состав}" th:text="${сотр}">
+                Сотрудник
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3> Кафедры</h3>
+            <div th:if="${faculty.кафедры.empty}" class="empty">
+                Нет кафедр
+            </div>
+            <div th:each="каф : ${faculty.кафедры}" th:text="${каф}">
+                Кафедра
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3> Преподаватели</h3>
+            <div th:if="${faculty.преподаватели.empty}" class="empty">
+                Нет преподавателей
+            </div>
+            <div th:each="преп : ${faculty.преподаватели}" th:text="${преп}">
+                Преподаватель
+            </div>
+        </div>
+    </div>
+    
+    <div class="stats">
+        Всего факультетов: <span th:text="${count}">0</span>
+    </div>
+
+<a href="/support" style="text-decoration: none;">
+    <div class="support-button">
+        <span class="support-text">поддержка</span>
+        <div class="support-circle">
+            <img src="/images/support.gif" alt="Поддержка">
+        </div>
+    </div>
+</a>
+</body>
+</html>
